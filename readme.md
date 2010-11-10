@@ -14,7 +14,7 @@ Small and handy Ruby driver for HBase (via Stargate RESTfull interface).
 	hbase.create 'users'
 
 	# listing all tables
-	p hbase.all # => ['users']
+	p hbase.all.collect{|t| t.name} # => ['users']
 
 	# create record
 	users.update 'john', 'attr:email' => 'john@mail.com'
