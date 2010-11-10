@@ -38,6 +38,8 @@ Small and handy Ruby driver for HBase (via Stargate RESTfull interface).
 	list = users.scan :start => 'john', :batch => 5, :columns => ['attr:']
 	p list.collect{|user| user['attr:email'].value} # => ['john@mail.com', 'mario@mail.com', 'stanley@mail.com']
 	
+It's under development, so for full docs and latest changes please go to specs and look at code.
+	
 # Installation
 
 	$ gem install ruby-driver
