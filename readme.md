@@ -1,6 +1,6 @@
 # Ruby driver for HBase
 
-Small and handy Ruby driver for HBase (via HBase's Stargate RESTfull interface).
+Small and handy Ruby driver for HBase (via Stargate RESTfull interface).
 
 # Usage
 
