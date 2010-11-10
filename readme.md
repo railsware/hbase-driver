@@ -22,10 +22,11 @@ Small and handy Ruby driver for HBase (via Stargate RESTfull interface).
 	# get record
 	john = users['john']
 	p john['attr:email'].value # => "john@mail.com"    
-	john['attr:email'].timestamp # => 123456789
+	p john['attr:email'].timestamp # => 123456789
 
 	# update record
 	users.update 'john', 'attr:email' => "another@mail.com"
+	p john['attr:email'].value # => "another@mail.com"
 
 	# deleting record
 	users.delete 'john'    
