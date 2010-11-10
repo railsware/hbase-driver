@@ -1,5 +1,13 @@
 require 'rake/gempackagetask'
 
+require 'rspec/core/rake_task'
+
+RSpec::Core::RakeTask.new('spec') do |t|
+  t.pattern = "spec/**/[^_]*_spec.rb"
+end
+
+task :default => :spec
+
 spec = Gem::Specification.new do |s| 
   s.name = "hbase-driver"
   s.version = '0.0.1'

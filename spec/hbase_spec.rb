@@ -36,8 +36,8 @@ describe "HBase", :slow => true do
     
     # read
     record = table['john']
-    record['attr:email'].value.should == "john@mail.com"    
-    record['attr:email'].timestamp.should_not be_nil
+    record['attr:email'].should == "john@mail.com"    
+    record.cells['attr:email'].timestamp.should_not be_nil
     
     # update
     table.update 'john', 'attr:email' => "another@mail.com"
@@ -47,7 +47,7 @@ describe "HBase", :slow => true do
     # record['attr:email'] = "another@mail.com", timestamp
     #     
     record = table['john']
-    record['attr:email'].value.should == "another@mail.com"
+    record['attr:email'].should == "another@mail.com"
     
     # delete
     table.delete 'john'    
@@ -65,7 +65,7 @@ describe "HBase", :slow => true do
     
     it "scanner" do
       records = @users.scan :start => 'john', :batch => 5, :columns => ['attr:']
-      records.collect{|record| record['attr:email'].value}.should == %w(john@mail.com mario@mail.com stanley@mail.com)
+      records.collect{|record| record['attr:email']}.should == %w(john@mail.com mario@mail.com stanley@mail.com)
     end
   end
 end

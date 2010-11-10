@@ -11,7 +11,7 @@ class HBase
         record = Record.new
         old_row = stargate.show_row(table_name, key)
         old_row.columns.each do |old_cell|
-          record[old_cell.name] = Cell.new old_cell.value, old_cell.timestamp
+          record.cells[old_cell.name] = Cell.new old_cell.value, old_cell.timestamp
         end
         record
       rescue Stargate::RowNotFoundError
@@ -62,7 +62,7 @@ class HBase
         old_rows.each do |old_row|
           old_row.columns.each do |old_cell|
             record = Record.new
-            record[old_cell.name] = Cell.new old_cell.value, old_cell.timestamp
+            record.cells[old_cell.name] = Cell.new old_cell.value, old_cell.timestamp
             records << record
           end
         end
