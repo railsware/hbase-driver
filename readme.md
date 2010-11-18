@@ -48,5 +48,5 @@ For installation of HBase and Stargate please see HBase docs (google it).
 
 # Contributors
 
-- Alexey Petrushin http://github.com/alexeypetrushin
-- Dmitry Larkin http://github.com/dml
+- [Alexey Petrushin](http://github.com/alexeypetrushin)
+- [Dmitry Larkin](http://github.com/dml)
