@@ -45,3 +45,8 @@ Small and handy Ruby driver for HBase (via Stargate RESTfull interface).
 For installation of HBase and Stargate please see HBase docs (google it).
 
 **Warning:** currently HBase distributed with RESTful interface called 'rest' and it's deprecated and broken. And because it looks very similar to Stargate it's easy to mix it up. So, be aware, you need to install and use the Stargate, not default and broken HBase REST client.
+
+# Contributors
+
+- Alexey Petrushin http://github.com/alexeypetrushin
+- Dmitry Larkin http://github.com/dml
