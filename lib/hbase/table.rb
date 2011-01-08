@@ -9,6 +9,7 @@ class HBase
     def get(key, with_timestamps = false)
       begin
         record = Record.new
+        record.id = key        
         old_row = stargate.show_row(table_name, key)
         old_row.columns.each do |old_cell|
           record.cells[old_cell.name] = Cell.new old_cell.value, old_cell.timestamp
@@ -57,14 +58,15 @@ class HBase
       
       scanner = stargate.open_scanner(table_name, stargate_options)
       begin
-        old_rows = stargate.get_rows(scanner)
+        old_rows = stargate.get_rows(scanner)        
         records = []
-        old_rows.each do |old_row|
-          old_row.columns.each do |old_cell|
-            record = Record.new
-            record.cells[old_cell.name] = Cell.new old_cell.value, old_cell.timestamp
-            records << record
-          end
+        old_rows.each do |old_row|          
+          record = Record.new
+          record.id = old_row.name
+          old_row.columns.each do |old_cell|                        
+            record.cells[old_cell.name] = Cell.new old_cell.value, old_cell.timestamp            
+          end          
+          records << record
         end
         records
       ensure

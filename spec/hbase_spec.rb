@@ -10,21 +10,21 @@ describe "HBase", :slow => true do
       raise e
     end    
     
-    @hbase.delete 'users' if @hbase.include? "users"
-    @hbase.create 'users', 'attr'
+    @hbase.delete 'users_spec' if @hbase.include? "users_spec"
+    @hbase.create 'users_spec', 'attr'
   end
   
   after :all do
-    @hbase.delete 'users' if @hbase.include? "users"
+    @hbase.delete 'users_spec' if @hbase.include? "users_spec"
   end
 
   it "metadata" do
-    @hbase.all.find{|t| t.name == 'users'}.should_not be_nil
-    @hbase['users'].metadata.name.should == 'users'
+    @hbase.all.find{|t| t.name == 'users_spec'}.should_not be_nil
+    @hbase['users_spec'].metadata.name.should == 'users_spec'
   end
   
   it "CRUD" do
-    table = @hbase['users']
+    table = @hbase['users_spec']
     table.should_not include('john')    
     
     # read
@@ -36,6 +36,7 @@ describe "HBase", :slow => true do
     
     # read
     record = table['john']
+    record.id.should == "john"
     record['attr:email'].should == "john@mail.com"    
     record.cells['attr:email'].timestamp.should_not be_nil
     
@@ -54,9 +55,16 @@ describe "HBase", :slow => true do
     table.should_not include('john')
   end
   
+  it "to_hash" do
+    table = @hbase['users_spec']
+    table.update 'john', 'attr:email' => 'john@mail.com', 'attr:login' => 'john'
+    table['john'].to_hash.should == {"login"=>"john", "email"=>"john@mail.com"}
+    table['john'].to_hash(true).should == {"id"=>"john", "login"=>"john", "email"=>"john@mail.com"}
+  end
+  
   describe "scanner" do
     before :all do
-      @users = @hbase['users']           
+      @users = @hbase['users_spec']           
       
       @users.update 'john', 'attr:email' => 'john@mail.com'
       @users.update 'mario', 'attr:email' => 'mario@mail.com'
@@ -65,6 +73,7 @@ describe "HBase", :slow => true do
     
     it "scanner" do
       records = @users.scan :start => 'john', :batch => 5, :columns => ['attr:']
+      records.collect{|record| record.id}.should == %w(john mario stanley)
       records.collect{|record| record['attr:email']}.should == %w(john@mail.com mario@mail.com stanley@mail.com)
     end
   end
